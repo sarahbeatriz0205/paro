@@ -1,1 +1,1 @@
-# paro
+# Parô! Jogo de adedonha
