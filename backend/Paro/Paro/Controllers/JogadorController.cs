@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Paro.Services;
 using Paro.Models;
+using Paro.Repositories.RepositoryInterfaces;
 
 namespace Paro.Controllers
 {
@@ -8,16 +9,22 @@ namespace Paro.Controllers
     [Route("[controller]")]
     public class JogadorController : ControllerBase
     {
+        private readonly JogadorService _jogadorService;
+        public JogadorController(JogadorService jogadorService)
+        {
+            _jogadorService = jogadorService;
+        }
+
         [HttpGet(Name = "GetAllJogador")]
         public IEnumerable<Jogador> GetAll()
         {
-            return JogadorService.Listar();
+            return _jogadorService.Listar();
         }
 
         [HttpGet("{id}", Name = "GetJogador")]
         public IActionResult Get(int id)
         {
-            var jogador = JogadorService.ObterPorId(id);
+            var jogador = _jogadorService.ObterPorId(id);
             if (jogador is null)
             {
                 return NotFound();
@@ -28,18 +35,19 @@ namespace Paro.Controllers
         [HttpPost(Name = "CriaJogador")]
         public IActionResult Create(Jogador jogador)
         {
-            var criaJogador = JogadorService.Adicionar(jogador);
-            if (criaJogador is null)
+            List<string> validacao = _jogadorService.Validar(jogador);
+            if (validacao.Count > 0)
             {
-                return BadRequest();
+                return BadRequest(validacao);
             }
-            return CreatedAtAction(nameof(Get), new { id = criaJogador.Id }, criaJogador);
+            _jogadorService.Adicionar(jogador);
+            return CreatedAtAction(nameof(Get), new { id = jogador.Id }, jogador);
         }
         [HttpDelete("{id}", Name = "ExcluiJogador")]
-        public IActionResult Delete(int id)
+        public IActionResult Delete(Jogador jogador)
         {
-            var jogador = JogadorService.Excluir(id);
-            if (jogador is null)
+            List<string> validacao = _jogadorService.Validar(jogador);
+            if (validacao.Count > 0)
             {
                 return NotFound();
             }
@@ -48,12 +56,12 @@ namespace Paro.Controllers
         [HttpPut(Name = "AlteraJogador")]
         public IActionResult Update(Jogador jogador)
         {
-            var jogadorAlterado = JogadorService.Alterar(jogador);
-            if (jogadorAlterado is null)
+            List<string> validacao = _jogadorService.Validar(jogador);
+            if (validacao.Count > 0)
             {
-                return BadRequest();
+                return BadRequest(validacao);
             }
-            return Ok(jogadorAlterado);
+            return Ok();
         }
     }
 }

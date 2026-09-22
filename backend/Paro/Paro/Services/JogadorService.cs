@@ -1,72 +1,66 @@
 ﻿using Paro.Models;
+using Paro.Repositories;
+using Paro.Repositories.RepositoryInterfaces;
 
 namespace Paro.Services
 {
-    public static class JogadorService
+    public class JogadorService
     {
-        static List<Jogador> Jogadores { get; } = new List<Jogador>();
-        static int nextId = 1;
-        public static List<Jogador> Listar() => Jogadores;
-
-        public static Jogador? ObterPorId(int id)
+        private readonly IRepository<Jogador>? _jogadorRepository;
+        public JogadorService(IRepository<Jogador>? jogadorRepository)
         {
-            var jogador = Jogadores.FirstOrDefault(t => t.Id == id);
-            if (jogador is null)
-            {
-                return null;
-            }
-            return jogador;
+            _jogadorRepository = jogadorRepository;
         }
-        public static bool Validar(Jogador jogador)
+        public IEnumerable<Jogador> Listar()
         {
+            return _jogadorRepository.Listar();
+        }   
+        public Jogador? ObterPorId(int id)
+        {
+            return _jogadorRepository.ObterPorId(id);
+        }
+        public List<string> Validar(Jogador jogador)
+        {
+            var erros = new List<string>();
+
             if (jogador is null)
             {
-                return false;
+                erros.Add("Jogador não pode ser nulo.");
+                return erros;
             }
+
             if (string.IsNullOrWhiteSpace(jogador.Nome))
-            {
-                return false;
-            }
-            if (jogador.PontuacaoTotal < 0) {
-                return false;
-            }
-            return true;
+                erros.Add("Nome do jogador é obrigatório.");
+
+            if (jogador.PontuacaoTotal < 0)
+                erros.Add("Pontuação total não pode ser negativa.");
+
+            return erros;
         }
 
-        public static Jogador? Adicionar(Jogador jogador)
+        public void Adicionar(Jogador jogador)
         {
-            bool ehValido = JogadorService.Validar(jogador);
-            if (!ehValido)
-            {
-                return null;
-            }
-            jogador.Id = nextId++;
-            Jogadores.Add(jogador);
-            return jogador;
+            var ehValido = Validar(jogador);
+            if (ehValido.Any())
+                throw new ArgumentException(string.Join(", ", ehValido));
+            _jogadorRepository.Adicionar(jogador);
         }
 
-        public static Jogador? Excluir(int id)
+        public void Excluir(Jogador jogador)
         {
-            var jogador = ObterPorId(id);
-            if (jogador is null)
-                return null;
-            Jogadores.Remove(jogador);
-            return jogador;
+            var ehValido = Validar(jogador);
+            if (ehValido.Any())
+                throw new ArgumentException(string.Join(", ", ehValido));
+            _jogadorRepository.Excluir(jogador);
         }
 
-        public static Jogador? Alterar(Jogador jogador)
+        public void Alterar(Jogador jogador)
         {
-            bool ehValido = JogadorService.Validar(jogador);
-            if (!ehValido)
-            {
-                return null;
-            }
-            var index = Jogadores.FindIndex(t => t.Id == jogador.Id);
-            if (index == -1)
-                return null;
-
-            Jogadores[index] = jogador;
-            return jogador;
+            var ehValido = Validar(jogador);
+            if (ehValido.Any())
+                throw new ArgumentException(string.Join(", ", ehValido));
+            _jogadorRepository.Alterar(jogador);
         }
     }
 }
+     
