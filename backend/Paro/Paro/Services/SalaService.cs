@@ -63,5 +63,11 @@ namespace Paro.Services
             Salas[index] = sala;
             return sala;
         }
+
+        public int GerarCodigoSala()
+        {
+            var random = new Random();
+            int codigoSala = random.Next(10000, 99999);
+        }
     }
 }
