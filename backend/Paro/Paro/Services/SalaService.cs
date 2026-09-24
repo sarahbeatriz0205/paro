@@ -1,11 +1,13 @@
 using Paro.Models;
 using System.Collections.Generic;
 using System.Linq;
+using Paro.Utils;
 
 namespace Paro.Services
 {
     public static class SalaService
     {
+        private readonly ContextDb _contexto;
         static List<Sala> Salas { get; } = new List<Sala>();
         static int nextId = 0;
 
@@ -19,55 +21,49 @@ namespace Paro.Services
             return sala;
         }
 
-        public static bool Validar(Sala sala)
+        public static Sala? CriarSala(Sala sala)
         {
-            if (sala is null)
-            {
-                return false;
-            }
-            return true;
-        }
-
-        public static Sala? Adicionar(Sala sala)
-        {
-            bool ehValido = SalaService.Validar(sala);
-            if (!ehValido)
-            {
-                return null;
-            }
-            sala.Id = nextId++;
-            Salas.Add(sala);
+            // organizador tem que ir pra sala?
+            sala.Codigo = GerarCodigoSala();
+            _contexto.Salas.Add(sala);
             return sala;
         }
 
-        public static Sala? Excluir(int id)
+        public static Sala? ExcluirSala(int id)
         {
             var sala = ObterPorId(id);
             if (sala is null)
                 return null;
-            Salas.Remove(sala);
+            _contexto.Salas.Remove(sala);
             return sala;
         }
 
-        public static Sala? Alterar(Sala sala)
+        public static Sala? AlterarSala(Sala sala)
         {
-            bool ehValido = SalaService.Validar(sala);
-            if (!ehValido)
-            {
+            var sala = ObterPorId(id);
+            if (sala is null)
                 return null;
-            }
-            var index = Salas.FindIndex(t => t.Id == sala.Id);
-            if (index == -1)
-                return null;
-
-            Salas[index] = sala;
+            _contexto.Salas.Insert(sala, sala);
             return sala;
         }
 
-        public int GerarCodigoSala()
+        public static int GerarCodigoSala()
         {
             var random = new Random();
-            int codigoSala = random.Next(10000, 99999);
+            int codigoSala = random.Next(100000, 999999);
+            return codigoSala;
+        }
+
+        public Jogador InserirJogadorNaSala(Jogador jogador, int idSala)
+        {
+            Sala sala = ObterPorId(idSala);
+            if (sala is null || !sala.Ativa)
+            {
+                return;
+            }
+            _contexto.Jogadores.Add(jogador);
+            sala.Jogadores.Add(jogador);
+            return jogador;
         }
     }
 }

@@ -7,6 +7,7 @@
         public StatusEnum? Status { get; set; }
         public int QuantidadeRodadas { get; set; }
         public List<Jogador>? Jogadores { get; set; }
+        public bool Ativa { get; set; } = true;
         public enum StatusEnum
         {
             NaoIniciada,
