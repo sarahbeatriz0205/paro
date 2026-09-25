@@ -8,7 +8,7 @@ using Paro.Utils;
 
 namespace Paro.Migrations
 {
-    [DbContext(typeof(AppDbContext))]
+    [DbContext(typeof(ContextDb))]
     partial class AppDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
@@ -45,6 +45,9 @@ namespace Paro.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("Ativa")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("Codigo")

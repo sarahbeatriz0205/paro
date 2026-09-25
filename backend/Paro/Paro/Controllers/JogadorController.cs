@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Paro.Services;
 using Paro.Models;
-using Paro.Repositories.RepositoryInterfaces;
+using Paro.Entities;
 
 namespace Paro.Controllers
 {
@@ -35,32 +35,19 @@ namespace Paro.Controllers
         [HttpPost(Name = "CriaJogador")]
         public IActionResult Create(Jogador jogador)
         {
-            List<string> validacao = _jogadorService.Validar(jogador);
-            if (validacao.Count > 0)
-            {
-                return BadRequest(validacao);
-            }
-            _jogadorService.Adicionar(jogador);
+            _jogadorService.CriarJogador(jogador);
             return CreatedAtAction(nameof(Get), new { id = jogador.Id }, jogador);
         }
         [HttpDelete("{id}", Name = "ExcluiJogador")]
         public IActionResult Delete(Jogador jogador)
         {
-            List<string> validacao = _jogadorService.Validar(jogador);
-            if (validacao.Count > 0)
-            {
-                return NotFound();
-            }
+            _jogadorService.ExcluirJogador(jogador);
             return NoContent();
         }
         [HttpPut(Name = "AlteraJogador")]
         public IActionResult Update(Jogador jogador)
         {
-            List<string> validacao = _jogadorService.Validar(jogador);
-            if (validacao.Count > 0)
-            {
-                return BadRequest(validacao);
-            }
+            _jogadorService.AlterarJogador(jogador);
             return Ok();
         }
     }

@@ -1,49 +1,57 @@
-using Paro.Models;
 using System.Collections.Generic;
 using System.Linq;
 using Paro.Utils;
+using Paro.Entities;
 
 namespace Paro.Services
 {
-    public static class SalaService
+    public class SalaService
     {
-        private readonly ContextDb _contexto;
-        static List<Sala> Salas { get; } = new List<Sala>();
-        static int nextId = 0;
-
-        public static Sala? ObterPorId(int id)
+        private readonly Factory _factory;
+        public SalaService(Factory factory)
         {
-            var sala = Salas.FirstOrDefault(t => t.Id == id);
+            _factory = factory;
+        }
+        public Sala? ObterSalaPorId(int id)
+        {
+            var salaDao = _factory.ObterSalaDao();
+            var busca = salaDao.ObterPorId(id);
+            if (busca is null)
+            {
+                return null;
+            }
+            return busca;
+        }
+
+        public void CriarSala(Sala sala)
+        {
+            var salaDao =_factory.ObterSalaDao();
+            // organizador tem que ir pra sala?
+            sala.Codigo = GerarCodigoSala();
+            salaDao.CriarSala(sala);
+        }
+
+        public Sala? ExcluirSala(int id)
+        {
+            var salaDao = _factory.ObterSalaDao();
+            var sala = salaDao.ObterPorId(id);
             if (sala is null)
             {
                 return null;
             }
+            salaDao.ExcluirSala(sala);
             return sala;
         }
 
-        public static Sala? CriarSala(Sala sala)
+        public Sala? AlterarSala(Sala sala)
         {
-            // organizador tem que ir pra sala?
-            sala.Codigo = GerarCodigoSala();
-            _contexto.Salas.Add(sala);
-            return sala;
-        }
-
-        public static Sala? ExcluirSala(int id)
-        {
-            var sala = ObterPorId(id);
-            if (sala is null)
+            var salaDao = _factory.ObterSalaDao();
+            var salaBuscada = salaDao.ObterPorId(sala.Id);
+            if (salaBuscada is null)
+            {
                 return null;
-            _contexto.Salas.Remove(sala);
-            return sala;
-        }
-
-        public static Sala? AlterarSala(Sala sala)
-        {
-            var sala = ObterPorId(id);
-            if (sala is null)
-                return null;
-            _contexto.Salas.Insert(sala, sala);
+            }
+            salaDao.AlterarSala(sala);
             return sala;
         }
 
@@ -56,14 +64,20 @@ namespace Paro.Services
 
         public Jogador InserirJogadorNaSala(Jogador jogador, int idSala)
         {
-            Sala sala = ObterPorId(idSala);
+            var salaDao = _factory.ObterSalaDao();
+            var sala = salaDao.ObterPorId(idSala);
             if (sala is null || !sala.Ativa)
             {
-                return;
+                return null;
             }
-            _contexto.Jogadores.Add(jogador);
-            sala.Jogadores.Add(jogador);
+            salaDao.InserirJogadorNaSala(jogador, sala);
             return jogador;
+        }
+
+        public bool IniciarSala()
+        {
+            // ainda nao sei como eu faço
+            return false;
         }
     }
 }

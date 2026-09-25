@@ -1,65 +1,47 @@
 ﻿using Paro.Models;
-using Paro.Repositories;
-using Paro.Repositories.RepositoryInterfaces;
+using Paro.Entities;
 
 namespace Paro.Services
 {
     public class JogadorService
     {
-        private readonly IRepository<Jogador>? _jogadorRepository;
-        public JogadorService(IRepository<Jogador>? jogadorRepository)
+        private readonly Factory _factory;
+        public JogadorService(Factory factory)
         {
-            _jogadorRepository = jogadorRepository;
+            _factory = factory;
         }
         public IEnumerable<Jogador> Listar()
         {
-            return _jogadorRepository.Listar();
-        }   
+            var jogadorDao = _factory.ObterJogadorDao();
+            return jogadorDao.Listar();
+        }
         public Jogador? ObterPorId(int id)
         {
-            return _jogadorRepository.ObterPorId(id);
-        }
-        public List<string> Validar(Jogador jogador)
-        {
-            var erros = new List<string>();
-
-            if (jogador is null)
+            var jogadorDao = _factory.ObterJogadorDao();
+            var busca = jogadorDao.ObterPorId(id);
+            if (busca is null)
             {
-                erros.Add("Jogador não pode ser nulo.");
-                return erros;
+                return null;
             }
-
-            if (string.IsNullOrWhiteSpace(jogador.Nome))
-                erros.Add("Nome do jogador é obrigatório.");
-
-            if (jogador.PontuacaoTotal < 0)
-                erros.Add("Pontuação total não pode ser negativa.");
-
-            return erros;
+            return busca;
         }
 
-        public void Adicionar(Jogador jogador)
+        public void CriarJogador(Jogador jogador)
         {
-            var ehValido = Validar(jogador);
-            if (ehValido.Any())
-                throw new ArgumentException(string.Join(", ", ehValido));
-            _jogadorRepository.Adicionar(jogador);
+            var jogadorDao = _factory.ObterJogadorDao();
+            jogadorDao.CriarJogador(jogador);
         }
 
-        public void Excluir(Jogador jogador)
+        public void ExcluirJogador(Jogador jogador)
         {
-            var ehValido = Validar(jogador);
-            if (ehValido.Any())
-                throw new ArgumentException(string.Join(", ", ehValido));
-            _jogadorRepository.Excluir(jogador);
+            var jogadorDao = _factory.ObterJogadorDao();
+            jogadorDao.ExcluirJogador(jogador);
         }
 
-        public void Alterar(Jogador jogador)
+        public void AlterarJogador(Jogador jogador)
         {
-            var ehValido = Validar(jogador);
-            if (ehValido.Any())
-                throw new ArgumentException(string.Join(", ", ehValido));
-            _jogadorRepository.Alterar(jogador);
+            var jogadorDao = _factory.ObterJogadorDao();
+            jogadorDao.AlterarJogador(jogador);
         }
     }
 }

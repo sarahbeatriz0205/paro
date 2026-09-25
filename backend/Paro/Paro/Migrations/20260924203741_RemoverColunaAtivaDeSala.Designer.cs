@@ -10,8 +10,8 @@ using Paro.Utils;
 namespace Paro.Migrations
 {
     [DbContext(typeof(ContextDb))]
-    [Migration("20260921233333_Inicial")]
-    partial class Inicial
+    [Migration("20260924203741_RemoverColunaAtivaDeSala")]
+    partial class RemoverColunaAtivaDeSala
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -48,6 +48,9 @@ namespace Paro.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("Ativa")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("Codigo")

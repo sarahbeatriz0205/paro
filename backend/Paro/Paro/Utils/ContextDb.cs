@@ -5,11 +5,11 @@ namespace Paro.Utils
 {
         public class ContextDb : DbContext
         {
-            public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+            public ContextDb(DbContextOptions<ContextDb> options) : base(options)
             {
             }
 
-            public DbSet<Sala> Salas { get; set; }
-            public DbSet<Jogador> Jogadores { get; set; }
+            public DbSet<SalaModel> Salas { get; set; }
+            public DbSet<JogadorModel> Jogadores { get; set; }
         }
     }

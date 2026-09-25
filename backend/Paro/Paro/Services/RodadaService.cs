@@ -1,69 +1,54 @@
-using Paro.Models;
+using Paro.Entities;
+using System.Diagnostics;
+using System.Threading;
 using System.Collections.Generic;
 
 namespace Paro.Services
 {
-    public static class RodadaService
+    public class RodadaService
     {
-        static List<Rodada> Rodadas { get; } = new List<Rodada>();
-        static int nextId = 0;
+        private readonly Factory _factory;
 
-        public static Rodada? ObterPorId(int id)
+        public RodadaService(Factory factory)
         {
-            var rodada = Rodadas.FirstOrDefault(t => t.Id == id);
-            if (rodada is null)
-            {
-                return null;
-            }
-            return rodada;
-        }
-        public static bool Validar(Rodada rodada)
-        {
-            if (rodada is null)
-            {
-                return false;
-            }
-            if (rodada.Tempo < 0)
-            {
-                return false;
-            }
-            return true;
+            _factory = factory;
         }
 
-        public static Rodada? Adicionar(Rodada rodada)
+        // cronômetro vai ter que ser em javascript direto no front
+        // back vai retornar o tempo que o usuário setou pra a rodada
+
+        public List<Rodada> RodadasPreConfiguradas(int salaId, int tempo, int qtdRodadas)
         {
-            bool ehValido = RodadaService.Validar(rodada);
-            if (!ehValido)
+            List<Rodada> rodadas = new List<Rodada>();
+            int limite = qtdRodadas + 1;
+            Rodada rodada;
+            while (qtdRodadas < limite)
+            {
+                rodada = new Rodada(tempo, SorteiaLetra());
+                rodadas.Add(rodada);
+            }
+            return rodadas;
+        }
+
+        public char SorteiaLetra()
+        {
+            List<char> alfabeto = new List<char> {
+                'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
+                'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
+            };
+            Random random = new Random();
+            return alfabeto[random.Next(alfabeto.Count)]; // índice aleatório
+        }
+
+        public Rodada ObterRodadaPorId(int id)
+        {
+            var rodadaDao = _factory.ObterRodadaDao();
+            var busca = rodadaDao.ObterPorId(id);
+            if (busca is null)
             {
                 return null;
             }
-            rodada.Id = nextId++;
-            Rodadas.Add(rodada);
-            return rodada;
-        }
-
-        public static Rodada? Excluir(int id)
-        {
-            var rodada = ObterPorId(id);
-            if (rodada is null)
-                return null;
-            Rodadas.Remove(rodada);
-            return rodada;
-        }
-
-        public static Rodada? Alterar(Rodada rodada)
-        {
-            bool ehValido = RodadaService.Validar(rodada);
-            if (!ehValido)
-            {
-                return null;
-            }
-            var index = Rodadas.FindIndex(t => t.Id == rodada.Id);
-            if (index == -1)
-                return null;
-
-            Rodadas[index] = rodada;
-            return rodada;
+            return busca;
         }
     }
 }

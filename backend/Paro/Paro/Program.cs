@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
+using Paro;
 using Paro.Models;
 using Paro.Repositories;
-using Paro.Repositories.RepositoryInterfaces;
 using Paro.Services;
 using Paro.Utils;
 
@@ -14,16 +14,16 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
 // DbContext
-builder.Services.AddDbContext<AppDbContext>(options =>
+builder.Services.AddDbContext<ContextDb>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Repositório
-builder.Services.AddScoped<IRepository<Jogador>, JogadorRepository>();
-
 // Service
+builder.Services.AddScoped<SalaService>();
 builder.Services.AddScoped<JogadorService>();
 
-builder.Services.AddControllers();
+builder.Services.AddSingleton<Factory>();
+
+
 
 var app = builder.Build();
 

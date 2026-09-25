@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Paro.Services;
-using Paro.Models;
+using Paro.Entities;
 
 namespace Paro.Controllers
 {
@@ -8,10 +8,15 @@ namespace Paro.Controllers
     [Route("[controller]")]
     public class RodadaController : ControllerBase
     {
+        private readonly RodadaService _rodadaService;
+        public RodadaController(RodadaService rodadaService)
+        {
+            _rodadaService = rodadaService;
+        }
         [HttpGet("{id}", Name = "GetRodada")]
         public IActionResult Get(int id)
         {
-            var rodada = RodadaService.ObterPorId(id);
+            var rodada = _rodadaService.ObterRodadaPorId(id);
             if (rodada is null)
             {
                 return NotFound();
@@ -22,32 +27,12 @@ namespace Paro.Controllers
         [HttpPost(Name = "CriaRodada")]
         public IActionResult Create(Rodada rodada)
         {
-            var criaRodada = RodadaService.Adicionar(rodada);
+            var criaRodada = _rodadaService.RodadasPreConfiguradas(rodada.SalaId, rodada.Tempo, rodada.Letra);
             if (criaRodada is null)
             {
                 return BadRequest();
             }
-            return CreatedAtAction(nameof(Get), new { id = criaRodada.Id }, criaRodada);
-        }
-        [HttpDelete("{id}", Name = "ExcluiRodada")]
-        public IActionResult Delete(int id)
-        {
-            var rodada = RodadaService.Excluir(id);
-            if (rodada is null)
-            {
-                return NotFound();
-            }
-            return NoContent();
-        }
-        [HttpPut(Name = "AlteraRodada")]
-        public IActionResult Update(Rodada rodada)
-        {
-            var rodadadAlterada = RodadaService.Alterar(rodada);
-            if (rodadadAlterada is null)
-            {
-                return BadRequest();
-            }
-            return Ok(rodadadAlterada);
+            return StatusCode(201, criaRodada);
         }
     }
 }

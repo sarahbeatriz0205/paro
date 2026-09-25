@@ -2,14 +2,15 @@
 using Paro.Utils;
 using Paro.Models;
 using Paro.Repositories.RepositoryInterfaces;
+using Paro.Entities;
 
 namespace Paro.Repositories
 {
-    public class JogadorRepository : IRepository<Jogador>
+    public class JogadorDao : IJogadorDao<Jogador>
     {
-        private readonly AppDbContext _contexto;
+        private readonly ContextDb _contexto;
 
-        public JogadorRepository(AppDbContext contexto)
+        public JogadorDao(ContextDb contexto)
         {
             _contexto = contexto;
         }
@@ -23,19 +24,19 @@ namespace Paro.Repositories
             return _contexto.Set<Jogador>().Find(id);
         }
 
-        public void Adicionar(Jogador jogador)
+        public void CriarJogador(Jogador jogador)
         {
             _contexto.Set<Jogador>().Add(jogador);
             _contexto.SaveChanges();
         }
 
-        public void Alterar(Jogador jogador)
+        public void AlterarJogador(Jogador jogador)
         {
             _contexto.Set<Jogador>().Update(jogador);
             _contexto.SaveChanges();
         }
 
-        public void Excluir(Jogador jogador)
+        public void ExcluirJogador(Jogador jogador)
         {
             _contexto.Set<Jogador>().Remove(jogador);
             _contexto.SaveChanges();

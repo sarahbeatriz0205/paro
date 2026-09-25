@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Paro.Services;
-using Paro.Models;
+using Paro.Entities;
 
 namespace Paro.Controllers
 {
@@ -8,10 +8,16 @@ namespace Paro.Controllers
     [Route("[controller]")]
     public class SalaController : ControllerBase
     {
+        private readonly Factory _factory;
+        public SalaController(Factory factory)
+        {
+            _factory = factory;
+        }
         [HttpGet("{id}", Name = "GetSala")]
         public IActionResult Get(int id)
         {
-            var sala = SalaService.ObterPorId(id);
+            var salaService = _factory.ObterSalaService();
+            var sala = salaService.ObterSalaPorId(id);
             if (sala is null)
             {
                 return NotFound();
@@ -22,27 +28,27 @@ namespace Paro.Controllers
         [HttpPost(Name = "CriaSala")]
         public IActionResult Create(Sala sala)
         {
-            var criaSala = SalaService.CriarSala(sala);
-            if (criaSala is null)
-            {
-                return BadRequest();
-            }
-            return CreatedAtAction(nameof(Get), new { id = criaSala.Id }, criaSala);
+            var salaService = _factory.ObterSalaService();
+            salaService.CriarSala(sala);
+            return CreatedAtAction(nameof(Get), new { id = sala.Id }, sala);
         }
+
         [HttpDelete("{id}", Name = "ExcluiSala")]
         public IActionResult Delete(int id)
         {
-            var sala = SalaService.ExcluirSala(id);
+            var salaService = _factory.ObterSalaService();
+            var sala = salaService.ObterSalaPorId(id);
             if (sala is null)
             {
                 return NotFound();
             }
+            salaService.ExcluirSala(id);
             return NoContent();
         }
         [HttpPut(Name = "AlteraSala")]
         public IActionResult Update(Sala sala)
         {
-            var salaAlt = SalaService.AlterarSala(sala);
+            var salaAlt = _factory.ObterSalaService().AlterarSala(sala);
             if (salaAlt is null)
             {
                 return BadRequest();
