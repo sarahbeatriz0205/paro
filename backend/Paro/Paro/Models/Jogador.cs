@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Paro.Models
 {
     [Table("Jogadores")]
-    public class JogadorModel
+    public class Jogador
     {
         public int Id { get; set; }
         public string? Nome { get; set; }

@@ -1,4 +1,4 @@
-﻿using Paro.Entities;
+﻿using Paro.Models;
 
 namespace Paro.Dao.DaoInterfaces
 {

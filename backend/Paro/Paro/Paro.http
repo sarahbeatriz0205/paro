@@ -1,6 +1,9 @@
 @Paro_HostAddress = http://localhost:5204
 
-GET {{Paro_HostAddress}}/weatherforecast/
-Accept: application/json
+POST {{Paro_HostAddress}}/rodada/3/
+Content-Type: application/json
 
+{
+  "tempo": 60
+}
 ###

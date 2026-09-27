@@ -1,7 +1,6 @@
 ﻿using Paro.Models;
 using Paro.Utils;
 using Paro.Dao.DaoInterfaces;
-using Paro.Entities;
 
 namespace Paro.Dao
 {

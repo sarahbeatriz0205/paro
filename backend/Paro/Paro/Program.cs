@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Paro;
+using Paro.HateoasBuilders;
 using Paro.Models;
 using Paro.Repositories;
 using Paro.Services;
@@ -9,7 +10,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
+    });
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
@@ -20,16 +25,19 @@ builder.Services.AddDbContext<ContextDb>(options =>
 // Service
 builder.Services.AddScoped<SalaService>();
 builder.Services.AddScoped<JogadorService>();
+builder.Services.AddScoped<RodadaService>();
 
 builder.Services.AddSingleton<Factory>();
 
-
+builder.Services.AddHttpContextAccessor(); 
+builder.Services.AddScoped<SalaHateoasBuilder>();
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+
     app.MapOpenApi();
     // configuração pra eu poder documentar com swagger
     app.UseSwaggerUI(options =>

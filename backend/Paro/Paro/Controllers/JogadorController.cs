@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Paro.Services;
 using Paro.Models;
-using Paro.Entities;
 
 namespace Paro.Controllers
 {

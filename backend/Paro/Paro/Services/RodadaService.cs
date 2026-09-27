@@ -1,7 +1,9 @@
-using Paro.Entities;
+using Paro.Models;
+using Paro.Repositories;
+using Paro.Utils;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
-using System.Collections.Generic;
 
 namespace Paro.Services
 {
@@ -17,24 +19,37 @@ namespace Paro.Services
         // cronômetro vai ter que ser em javascript direto no front
         // back vai retornar o tempo que o usuário setou pra a rodada
 
-        public List<Rodada> RodadasPreConfiguradas(int salaId, int tempo, int qtdRodadas)
+        public List<Rodada> RodadasPreConfiguradas(int salaId, int tempo)
         {
-            List<Rodada> rodadas = new List<Rodada>();
-            int limite = qtdRodadas + 1;
-            Rodada rodada;
-            while (qtdRodadas < limite)
+            var salaDao = _factory.ObterSalaDao();
+            var categoriaService = _factory.ObterCategoriaService();
+            var salaBuscada = salaDao.ObterPorId(salaId);
+            List<Categoria> categorias = categoriaService.ListaDeCategorias();
+
+            if (salaBuscada is null)
             {
-                rodada = new Rodada(tempo, SorteiaLetra());
-                rodadas.Add(rodada);
+                return null;
             }
+
+            List<Rodada> rodadas = new List<Rodada>();
+            Rodada rodada;
+
+            for (int i = 0; i < salaBuscada.QuantidadeRodadas; i++)
+            {
+                rodada = new Rodada { SalaId = salaId, Tempo = tempo, Letra = SorteiaLetra(), NumeroRodada = i + 1 , Categorias = categorias };
+                rodadas.Add(rodada);
+                salaBuscada.Rodadas.Add(rodada);
+            }
+ 
+            salaDao.AlterarSala(salaBuscada);
             return rodadas;
         }
 
         public char SorteiaLetra()
         {
             List<char> alfabeto = new List<char> {
-                'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
-                'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
+                'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'l', 'm',
+                'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'x', 'z'
             };
             Random random = new Random();
             return alfabeto[random.Next(alfabeto.Count)]; // índice aleatório
@@ -50,5 +65,7 @@ namespace Paro.Services
             }
             return busca;
         }
+
+
     }
 }

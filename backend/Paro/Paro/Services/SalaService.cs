@@ -1,13 +1,12 @@
-using System.Collections.Generic;
-using System.Linq;
-using Paro.Utils;
-using Paro.Entities;
+using Paro.Models;
+using Paro.Requests.SalaRequests;
 
 namespace Paro.Services
 {
     public class SalaService
     {
         private readonly Factory _factory;
+        private List<Jogador> jogadores = new List<Jogador>();
         public SalaService(Factory factory)
         {
             _factory = factory;
@@ -23,12 +22,27 @@ namespace Paro.Services
             return busca;
         }
 
-        public void CriarSala(Sala sala)
+        public Sala CriarSala(CriarSalaRequest salaRequest)
         {
-            var salaDao =_factory.ObterSalaDao();
-            // organizador tem que ir pra sala?
-            sala.Codigo = GerarCodigoSala();
+            Sala sala = new Sala
+            {
+                QuantidadeRodadas = salaRequest.QuantidadeRodadas,
+                Status = Sala.StatusEnum.NaoIniciada,
+                Codigo = GerarCodigoSala(),
+            };
+
+            Jogador organizador = new Jogador
+            {
+                Nome = salaRequest.NomeOrganizador,
+                PontuacaoTotal = 0,
+                IdentificaOrganizador = true
+
+            };
+
+            var salaDao = _factory.ObterSalaDao();
+            salaDao.InserirJogadorNaSala(organizador, sala);
             salaDao.CriarSala(sala);
+            return sala;
         }
 
         public Sala? ExcluirSala(int id)
@@ -43,16 +57,17 @@ namespace Paro.Services
             return sala;
         }
 
-        public Sala? AlterarSala(Sala sala)
+        public Sala? AlterarSala(int id, AlterarSalaRequest sala)
         {
             var salaDao = _factory.ObterSalaDao();
-            var salaBuscada = salaDao.ObterPorId(sala.Id);
+            var salaBuscada = salaDao.ObterPorId(id);
             if (salaBuscada is null)
             {
                 return null;
             }
-            salaDao.AlterarSala(sala);
-            return sala;
+            salaBuscada.QuantidadeRodadas = sala.QuantidadeRodadas;
+            salaDao.AlterarSala(salaBuscada);
+            return salaBuscada;
         }
 
         public static int GerarCodigoSala()
@@ -78,6 +93,26 @@ namespace Paro.Services
         {
             // ainda nao sei como eu faço
             return false;
+        }
+
+        public Jogador EntrarNaSala(string jogador, int codigo)
+        {
+            // por meio do código da sala o jogador consegue entrar
+
+            var salaDao = _factory.ObterSalaDao();
+            Sala salaBuscada = salaDao.BuscarSalaPorCodigo(codigo);
+            Jogador jogadorCriado = new Jogador
+            {
+                Nome = jogador,
+                PontuacaoTotal = 0,
+                IdentificaOrganizador = false
+            };
+
+            if (salaBuscada.Ativa)
+            {
+                salaDao.InserirJogadorNaSala(jogadorCriado, salaBuscada);
+            }
+            return jogadorCriado;
         }
     }
 }

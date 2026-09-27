@@ -36,9 +36,24 @@ namespace Paro
         {
             return new RodadaDao(ObterConexaoDb());
         }
+
+        public CategoriaDao ObterCategoriaDao()
+        {
+            return new CategoriaDao(ObterConexaoDb());
+        }
+
         public SalaService ObterSalaService()
         {
             return new SalaService(this);
+        }
+        public JogadorService ObterJogadorService()
+        {
+            return new JogadorService(this);
+        }
+
+        public CategoriaService ObterCategoriaService()
+        {
+            return new CategoriaService(this);
         }
     }
 }

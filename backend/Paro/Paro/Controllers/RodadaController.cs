@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
+using Paro.Models;
+using Paro.Requests.RodadaRequests;
 using Paro.Services;
-using Paro.Entities;
 
 namespace Paro.Controllers
 {
@@ -24,10 +25,10 @@ namespace Paro.Controllers
             return Ok(rodada);
         }
 
-        [HttpPost(Name = "CriaRodada")]
-        public IActionResult Create(Rodada rodada)
+        [HttpPost("{salaId}", Name = "CriaRodada")]
+        public IActionResult Create([FromRoute] int salaId, [FromBody] CriarRodadaRequest request)
         {
-            var criaRodada = _rodadaService.RodadasPreConfiguradas(rodada.SalaId, rodada.Tempo, rodada.Letra);
+            var criaRodada = _rodadaService.RodadasPreConfiguradas(salaId, request.Tempo);
             if (criaRodada is null)
             {
                 return BadRequest();

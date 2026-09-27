@@ -1,6 +1,9 @@
+using Azure.Core;
 using Microsoft.AspNetCore.Mvc;
+using Paro.Models;
+using Paro.Requests.SalaRequests;
+using Paro.Serializers;
 using Paro.Services;
-using Paro.Entities;
 
 namespace Paro.Controllers
 {
@@ -17,7 +20,7 @@ namespace Paro.Controllers
         public IActionResult Get(int id)
         {
             var salaService = _factory.ObterSalaService();
-            var sala = salaService.ObterSalaPorId(id);
+            Sala? sala = salaService.ObterSalaPorId(id);
             if (sala is null)
             {
                 return NotFound();
@@ -26,11 +29,11 @@ namespace Paro.Controllers
         }
 
         [HttpPost(Name = "CriaSala")]
-        public IActionResult Create(Sala sala)
+        public IActionResult Create([FromBody] CriarSalaRequest request)
         {
-            var salaService = _factory.ObterSalaService();
-            salaService.CriarSala(sala);
-            return CreatedAtAction(nameof(Get), new { id = sala.Id }, sala);
+            SalaService salaService = _factory.ObterSalaService();
+            var salaCriada = salaService.CriarSala(request);
+            return CreatedAtAction(nameof(Get), new { id = salaCriada.Id }, salaCriada);
         }
 
         [HttpDelete("{id}", Name = "ExcluiSala")]
@@ -45,15 +48,23 @@ namespace Paro.Controllers
             salaService.ExcluirSala(id);
             return NoContent();
         }
-        [HttpPut(Name = "AlteraSala")]
-        public IActionResult Update(Sala sala)
+        [HttpPut("{id}", Name = "AlteraSala")]
+        public IActionResult Update(int id, AlterarSalaRequest request)
         {
-            var salaAlt = _factory.ObterSalaService().AlterarSala(sala);
+            var salaAlt = _factory.ObterSalaService().AlterarSala(id, request);
             if (salaAlt is null)
             {
                 return BadRequest();
             }
             return Ok(salaAlt);
+        }
+
+        [HttpPost("{codigo}", Name ="Entrar")]
+        public IActionResult Entrar(EntrarRequest request)
+        {
+            SalaService salaService = _factory.ObterSalaService();
+            var jogadorEntrou = salaService.EntrarNaSala(request.NomeJogador, request.Codigo);
+            return CreatedAtAction(nameof(Get), new { id = jogadorEntrou.Id }, jogadorEntrou);
         }
     }
 }

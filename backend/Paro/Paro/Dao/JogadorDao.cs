@@ -2,7 +2,6 @@
 using Paro.Utils;
 using Paro.Models;
 using Paro.Repositories.RepositoryInterfaces;
-using Paro.Entities;
 
 namespace Paro.Repositories
 {

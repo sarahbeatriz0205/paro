@@ -3,9 +3,9 @@
 namespace Paro.Models
 {
     [Table("Placares")]
-    public class PlacarModel
+    public class Placar
     {
         public List<int>? Pontuacoes { get; set; }
-        public List<JogadorModel>? Jogadores { get; set; }
+        public List<Jogador>? Jogadores { get; set; }
     }
 }

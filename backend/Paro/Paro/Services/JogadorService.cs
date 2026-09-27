@@ -1,5 +1,4 @@
 ﻿using Paro.Models;
-using Paro.Entities;
 
 namespace Paro.Services
 {
