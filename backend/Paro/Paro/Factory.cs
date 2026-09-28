@@ -42,6 +42,16 @@ namespace Paro
             return new CategoriaDao(ObterConexaoDb());
         }
 
+        public RespostaDao ObterRespostaDao()
+        {
+            return new RespostaDao(ObterConexaoDb());
+        }
+
+        public RespostaService ObterRespostaService()
+        {
+            return new RespostaService(this);
+        }
+
         public SalaService ObterSalaService()
         {
             return new SalaService(this);
@@ -54,6 +64,11 @@ namespace Paro
         public CategoriaService ObterCategoriaService()
         {
             return new CategoriaService(this);
+        }
+
+        public RodadaService ObterRodadaService()
+        {
+            return new RodadaService(this);
         }
     }
 }

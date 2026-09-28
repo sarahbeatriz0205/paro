@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar Sala</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: #2a1b54;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 28px 28px;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 960px;
+            background-color: #3f2f82;
+            border: 2px solid #5743a3;
+            border-radius: 20px;
+            padding: 28px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+
+        /* Top Header Bar */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 35px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .mini-logo {
+            width: 44px;
+            height: 44px;
+            background-color: #e5122b;
+            border: 3px solid #fff;
+            clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 900;
+            font-size: 0.75rem;
+            transform: rotate(-10deg);
+            color: #fff;
+        }
+
+        .brand-title {
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 900;
+            font-size: 1.6rem;
+            color: #ffeb3b;
+            letter-spacing: 1px;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .room-badge {
+            background-color: #312170;
+            border: 2px solid #5743a3;
+            padding: 10px 18px;
+            border-radius: 12px;
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: #fff;
+            letter-spacing: 0.5px;
+        }
+
+        .icon-btn {
+            background-color: transparent;
+            border: 2px solid #5743a3;
+            color: #fff;
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+            .icon-btn:hover {
+                background-color: #4f3b99;
+                border-color: #795dcd;
+            }
+
+        /* Screen Title Area */
+        .page-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 25px;
+            max-width: 680px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .back-btn {
+            background-color: transparent;
+            border: 2px solid #5743a3;
+            color: #fff;
+            width: 46px;
+            height: 46px;
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+            .back-btn:hover {
+                background-color: #4f3b99;
+            }
+
+        .page-title-group h1 {
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 900;
+            font-size: 2.2rem;
+            color: #ffeb3b;
+            text-transform: uppercase;
+            line-height: 1.1;
+            letter-spacing: 0.5px;
+        }
+
+        .page-title-group p {
+            color: #bfaee3;
+            font-size: 1rem;
+            margin-top: 2px;
+        }
+
+        /* Form Card Container */
+        .card {
+            background-color: #312170;
+            border: 2px solid #5743a3;
+            border-radius: 18px;
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 22px;
+            max-width: 680px;
+            margin: 0 auto 10px auto;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-label {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #9a88cd;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+        }
+
+        .input-field {
+            width: 100%;
+            background-color: #231754;
+            border: 2px solid #48348a;
+            border-radius: 12px;
+            padding: 16px 20px;
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 600;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+            .input-field:focus {
+                border-color: #00f0b5;
+            }
+
+        /* Rounds Selector Grid */
+        .tempo-selector {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+
+        .tempo-opt {
+            background-color: #231754;
+            border: 2px solid #48348a;
+            border-radius: 12px;
+            padding: 14px;
+            color: #8f7fbf;
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 900;
+            font-size: 1.2rem;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s;
+            user-select: none;
+        }
+
+            .round-opt:hover {
+                border-color: #6b52c0;
+            }
+
+            .round-opt.active {
+                background-color: #ffeb3b;
+                border-color: #ffeb3b;
+                color: #1c103f;
+            }
+
+        /* Private Room Box */
+        .private-box {
+            background-color: #231754;
+            border: 2px solid #48348a;
+            border-radius: 12px;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .private-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #fff;
+            font-weight: 700;
+            font-size: 1.05rem;
+        }
+
+            .private-info svg {
+                color: #00f0b5;
+            }
+
+        .checkbox-custom {
+            width: 20px;
+            height: 20px;
+            background-color: #fff;
+            border-radius: 4px;
+        }
+
+        /* Submit Button */
+        .btn-submit {
+            width: 100%;
+            padding: 18px;
+            border-radius: 14px;
+            border: none;
+            background-color: #ffeb3b;
+            color: #1c103f;
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 900;
+            font-size: 1.25rem;
+            letter-spacing: 0.8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            text-transform: uppercase;
+            box-shadow: 0 5px 0 #c2b11e;
+            margin-top: 10px;
+            transition: transform 0.1s, filter 0.2s;
+        }
+
+            .btn-submit:active {
+                transform: translateY(3px);
+                box-shadow: 0 2px 0 #c2b11e;
+            }
+
+            .btn-submit:hover {
+                filter: brightness(1.05);
+            }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <!-- Header Bar -->
+
+        <!-- Page Title Header -->
+        <div class="page-header">
+            <button class="back-btn" title="Voltar">
+                <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" /></svg>
+            </button>
+            <div class="page-title-group">
+                <h1>CRIAR SALA</h1>
+            </div>
+        </div>
+
+        <!-- Form Box Container -->
+        <div class="card">
+
+            <!-- Select: Quantidade de Rodadas -->
+            <div class="form-group">
+                <label class="form-label" for="room-name">QUANTIDADE DE RODADAS</label>
+                <input type="text" id="room-name" class="input-field" placeholder="Insira a quantidade de rodadas">
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="room-name">TEMPO</label>
+                <div class="tempo-selector">
+                    <div class="tempo-opt">20</div>
+                    <div class="tempo-opt active">40</div>
+                    <div class="tempo-opt">60</div>
+                    <div class="tempo-opt">80</div>
+                </div>
+
+                <!-- Action Button -->
+                <button class="btn-submit">
+                    CRIAR
+                </button>
+            </div>
+    </div>
+
+</body>
+</html>

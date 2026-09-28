@@ -1,8 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Paro;
 using Paro.HateoasBuilders;
-using Paro.Models;
-using Paro.Repositories;
 using Paro.Services;
 using Paro.Utils;
 
@@ -26,6 +24,7 @@ builder.Services.AddDbContext<ContextDb>(options =>
 builder.Services.AddScoped<SalaService>();
 builder.Services.AddScoped<JogadorService>();
 builder.Services.AddScoped<RodadaService>();
+builder.Services.AddScoped<RespostaService>();
 
 builder.Services.AddSingleton<Factory>();
 

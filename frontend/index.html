@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parô!</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: #2a1b54;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 28px 28px;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 960px;
+            background-color: #3f2f82;
+            border: 2px solid #5743a3;
+            border-radius: 20px;
+            padding: 28px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+
+        /* Header Bar */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 35px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .mini-logo {
+            width: 44px;
+            height: 44px;
+            background-color: #e5122b;
+            border: 3px solid #fff;
+            clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 900;
+            font-size: 0.75rem;
+            transform: rotate(-10deg);
+            color: #fff;
+        }
+
+        .brand-title {
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 900;
+            font-size: 1.6rem;
+            color: #ffeb3b;
+            letter-spacing: 1px;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .icon-btn {
+            background-color: transparent;
+            border: 2px solid #5743a3;
+            color: #fff;
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+            .icon-btn:hover {
+                background-color: #4f3b99;
+                border-color: #795dcd;
+            }
+
+        /* Main Grid */
+        main {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 40px;
+            align-items: center;
+            padding: 10px 10px 20px 10px;
+        }
+
+        /* Left Hero Column */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .logo-wrapper {
+            position: relative;
+            width: fit-content;
+            margin-bottom: 15px;
+        }
+
+        .big-logo {
+            width: 160px;
+            height: 160px;
+            background-color: #e5122b;
+            border: 8px solid #fff;
+            clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform: rotate(-8deg);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+
+            .big-logo span {
+                font-family: 'Fredoka', sans-serif;
+                font-weight: 900;
+                font-size: 2.6rem;
+                color: #fff;
+                transform: rotate(-4deg);
+            }
+
+        .sparkle {
+            position: absolute;
+            top: -5px;
+            right: -30px;
+            color: #ffeb3b;
+            font-size: 2.4rem;
+        }
+
+        .hero-title-1 {
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 900;
+            font-size: 2.3rem;
+            color: #ffeb3b;
+            line-height: 1.1;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .hero-title-2 {
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 900;
+            font-size: 2.8rem;
+            color: #00f0b5;
+            line-height: 1.1;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .hero-subtitle {
+            color: #bfaee3;
+            font-size: 1.05rem;
+            line-height: 1.5;
+            margin-top: 10px;
+            max-width: 400px;
+        }
+
+        /* Right Card Column */
+        .card {
+            background-color: #312170;
+            border: 2px solid #5743a3;
+            border-radius: 18px;
+            padding: 32px 28px;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .card-title {
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 900;
+            font-size: 1.9rem;
+            color: #00f0b5;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #9a88cd;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 16px;
+            color: #ffeb3b;
+            font-size: 1.2rem;
+        }
+
+        .input-field {
+            width: 100%;
+            background-color: #231754;
+            border: 2px solid #48348a;
+            border-radius: 12px;
+            padding: 14px 14px 14px 48px;
+            color: #fff;
+            font-size: 1.05rem;
+            font-weight: 600;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+            .input-field:focus {
+                border-color: #00f0b5;
+            }
+
+        .btn {
+            width: 100%;
+            padding: 16px;
+            border-radius: 12px;
+            border: none;
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 900;
+            font-size: 1.15rem;
+            letter-spacing: 0.8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            text-transform: uppercase;
+            transition: transform 0.1s, filter 0.2s;
+        }
+
+            .btn:active {
+                transform: scale(0.98);
+            }
+
+        .btn-yellow {
+            background-color: #ffeb3b;
+            color: #1c103f;
+            box-shadow: 0 4px 0 #c2b11e;
+        }
+
+        .btn-cyan {
+            background-color: #00f0b5;
+            color: #1c103f;
+            box-shadow: 0 4px 0 #00b88a;
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid #5743a3;
+            color: #fff;
+        }
+
+            .btn-yellow:hover, .btn-cyan:hover, .btn-outline:hover {
+                filter: brightness(1.1);
+            }
+
+        @media (max-width: 768px) {
+            main {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <!-- Top Navigation Header -->
+
+        <!-- Main Content Area -->
+        <main>
+            <!-- Hero Section -->
+            <section class="hero">
+                <div class="logo-wrapper">
+                        <img src="imgs/marca.png" />
+                </div>
+            </section>
+
+            <!-- Action Card -->
+            <section class="card">
+
+                <div class="form-group">
+                    <label class="form-label" for="nickname">Qual vai ser o seu nome?</label>
+                    <div class="input-wrapper">
+                        <span class="input-icon">👤</span>
+                        <input type="text" id="nickname" class="input-field" placeholder="Seu apelido">
+                    </div>
+                </div>
+
+                <button class="btn btn-cyan">
+                    CRIAR SALA
+                </button>
+
+                <button class="btn btn-yellow">
+                    ENTRAR EM UMA SALA
+                </button>
+            </section>
+        </main>
+    </div>
+
+</body>
+</html>

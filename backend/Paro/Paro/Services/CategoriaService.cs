@@ -14,5 +14,11 @@ namespace Paro.Services
             var categoriaDao = _factory.ObterCategoriaDao();
             return categoriaDao.Listar();
         }
+
+        public int ContagemCategorias()
+        {
+            var categoriaDao = _factory.ObterCategoriaDao();
+            return categoriaDao.ContagemCategorias();
+        }
     }
 }
