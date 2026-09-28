@@ -8,7 +8,7 @@ using Paro.Services;
 namespace Paro.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("[api/controller]")]
     public class SalaController : ControllerBase
     {
         private readonly Factory _factory;

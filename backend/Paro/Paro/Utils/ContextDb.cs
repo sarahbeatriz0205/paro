@@ -13,6 +13,7 @@ namespace Paro.Utils
             public DbSet<Jogador> Jogadores { get; set; }
             public DbSet<Rodada> Rodadas { get; set; }
             public DbSet<Categoria> Categorias { get; set; }
+            public DbSet<Usuario> Usuario {get; set;}
 
             protected override void OnModelCreating(ModelBuilder modelBuilder)
             {
