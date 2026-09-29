@@ -5,7 +5,7 @@ using Paro.Models;
 namespace Paro.Controllers
 {
     [ApiController] 
-    [Route("[api/controller]")]
+    [Route("api/auth/[controller]")]
     public class JogadorController : ControllerBase
     {
         private readonly JogadorService _jogadorService;

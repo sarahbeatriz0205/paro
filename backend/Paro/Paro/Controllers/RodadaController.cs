@@ -6,7 +6,7 @@ using Paro.Services;
 namespace Paro.Controllers
 {
     [ApiController]
-    [Route("[api/controller]")]
+    [Route("api/rodada/[controller]")]
     public class RodadaController : ControllerBase
     {
         private readonly RodadaService _rodadaService;

@@ -1,32 +1,45 @@
 using Paro.Requests.AutenticacaoRequests;
+using Microsoft.AspNetCore.Mvc;
+using Paro.Utils;
+using Paro.Auth;
 namespace Paro.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/auth/[controller]")]
     public class AuthController : ControllerBase
     {
+        private readonly Factory _factory;
         private readonly TokenService _tokenService;
-        private readonly DbContext _context;
 
-        public AuthController(TokenService tokenService, ContextDb context)
+        public AuthController(TokenService tokenService, Factory factory)
         {
             _tokenService = tokenService;
-            _context = context;
+            _factory = factory;
         }
 
         [HttpPost("login")]
         public IActionResult Login([FromBody] LoginRequest request)
         {
-            var user = _context.Users.SingleOrDefault(u => 
-                u.Username == request.Username && 
-                u.Password == request.Password);
+            var usuario = _factory.ObterUsuarioDao().BuscaUsuario(request.Nome, request.Senha);
 
-            if (user == null)
-                return Unauthorized("Invalid credentials");
+            if (usuario == null)
+                return Unauthorized("Credenciais inválidas");
 
-            var token = _tokenService.GenerateToken(user);
+            var token = _tokenService.GeraToken(usuario);
 
             return Ok(new { token });
+        }
+
+
+        [HttpPost("criar")]
+        public IActionResult Criar([FromBody] CriarUsuarioRequest request)
+        {
+            var usuario = _factory.ObterUsuarioDao().CriarUsuario(request);
+
+            if (usuario == null)
+                return BadRequest("Erro ao criar usuário");
+
+            return StatusCode(201, "Usuário criado com sucesso!");
         }
     }
 }
