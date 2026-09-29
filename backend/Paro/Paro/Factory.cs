@@ -4,6 +4,7 @@ using Paro.Utils;
 using Paro.Repositories;
 using Paro.Services;
 using Paro.Dao;
+using Paro.Auth;
 
 namespace Paro
 {
@@ -42,6 +43,11 @@ namespace Paro
             return new CategoriaDao(ObterConexaoDb());
         }
 
+<<<<<<< HEAD
+        public UsuarioDao ObterUsuarioDao()
+        {
+            return new UsuarioDao(ObterConexaoDb());
+=======
         public RespostaDao ObterRespostaDao()
         {
             return new RespostaDao(ObterConexaoDb());
@@ -50,6 +56,7 @@ namespace Paro
         public RespostaService ObterRespostaService()
         {
             return new RespostaService(this);
+>>>>>>> origin/main
         }
 
         public SalaService ObterSalaService()
