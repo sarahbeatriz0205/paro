@@ -67,5 +67,21 @@ namespace Paro.Services
         }
 
 
+        public Rodada? FinalizarRodada(int rodadaId)
+        {
+            var rodadaDao = _factory.ObterRodadaDao();
+            var rodada = rodadaDao.ObterPorId(rodadaId);
+
+            if (rodada is null || rodada.Finalizada)
+            {
+                return null;
+            }
+
+            rodada.Finalizada = true;
+            rodadaDao.AlterarRodada(rodada);
+
+            return rodada;
+        }
+
     }
 }

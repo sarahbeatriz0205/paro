@@ -5,8 +5,6 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Paro;
 using Paro.HateoasBuilders;
-using Paro.Models;
-using Paro.Repositories;
 using Paro.Services;
 using Paro.Utils;
 using Paro.Auth;
@@ -80,7 +78,11 @@ builder.Services.AddAuthorization();
 builder.Services.AddScoped<SalaService>();
 builder.Services.AddScoped<JogadorService>();
 builder.Services.AddScoped<RodadaService>();
+<<<<<<< HEAD
 builder.Services.AddScoped<TokenService>();
+=======
+builder.Services.AddScoped<RespostaService>();
+>>>>>>> origin/main
 
 builder.Services.AddSingleton<Factory>();
 

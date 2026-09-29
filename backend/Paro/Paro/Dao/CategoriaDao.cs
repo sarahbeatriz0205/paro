@@ -16,5 +16,10 @@ namespace Paro.Dao
         {
             return _contexto.Set<Categoria>().ToList();
         }
+
+        public int ContagemCategorias()
+        {
+            return _contexto.Set<Categoria>().Count();
+        }
     }
 }
