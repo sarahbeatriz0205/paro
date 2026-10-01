@@ -1,0 +1,9 @@
+@Paro_HostAddress = http://localhost:5204
+
+POST {{Paro_HostAddress}}/rodada/5/
+Content-Type: application/json
+
+{
+  "tempo": 60
+}
+###
