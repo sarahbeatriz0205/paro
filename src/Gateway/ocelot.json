@@ -1,0 +1,76 @@
+{
+  "Routes": [
+    // para endpoints de sala
+    {
+      "DownstreamPathTemplate": "/api/sala/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5204
+        }
+      ],
+      "UpstreamPathTemplate": "/sala/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ]
+    },
+
+    // para endpoints de rodada
+    {
+      "DownstreamPathTemplate": "/api/rodada/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5204
+        }
+      ],
+      "UpstreamPathTemplate": "/rodada/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post" ]
+    },
+
+    // para endpoints de jogador
+    {
+      "DownstreamPathTemplate": "/api/jogador/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5204
+        }
+      ],
+      "UpstreamPathTemplate": "/jogador/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ]
+    },
+
+    // para endpoints de resposta
+    {
+      "DownstreamPathTemplate": "/api/resposta/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5204
+        }
+      ],
+      "UpstreamPathTemplate": "/resposta/{everything}",
+      "UpstreamHttpMethod": [ "Post" ]
+    },
+
+    // para endpoints de autenticação (organizadores que precisam logar - auth)
+    {
+      "DownstreamPathTemplate": "/api/auth/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5253
+        }
+      ],
+      "UpstreamPathTemplate": "/auth/{everything}",
+      "UpstreamHttpMethod": [ "Post" ]
+    }
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "https://0.0.0.0:5288"
+  }
+}
