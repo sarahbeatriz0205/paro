@@ -1,6 +1,5 @@
 {
   "Routes": [
-    // para endpoints de sala
     {
       "DownstreamPathTemplate": "/api/sala/{everything}",
       "DownstreamScheme": "http",
@@ -13,8 +12,7 @@
       "UpstreamPathTemplate": "/sala/{everything}",
       "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ]
     },
-
-    // para endpoints de rodada
+    
     {
       "DownstreamPathTemplate": "/api/rodada/{everything}",
       "DownstreamScheme": "http",
@@ -28,7 +26,6 @@
       "UpstreamHttpMethod": [ "Get", "Post" ]
     },
 
-    // para endpoints de jogador
     {
       "DownstreamPathTemplate": "/api/jogador/{everything}",
       "DownstreamScheme": "http",
@@ -42,7 +39,6 @@
       "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ]
     },
 
-    // para endpoints de resposta
     {
       "DownstreamPathTemplate": "/api/resposta/{everything}",
       "DownstreamScheme": "http",
@@ -56,7 +52,7 @@
       "UpstreamHttpMethod": [ "Post" ]
     },
 
-    // para endpoints de autenticação (organizadores que precisam logar - auth)
+
     {
       "DownstreamPathTemplate": "/api/auth/{everything}",
       "DownstreamScheme": "http",

@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Placar Geral - Adedonha</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: #2a1b54;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 28px 28px;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 960px;
+            background-color: #3f2f82;
+            border: 2px solid #5743a3;
+            border-radius: 20px;
+            padding: 28px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+
+        /* Top Header Bar */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .mini-logo {
+            width: 44px;
+            height: 44px;
+            background-color: #e5122b;
+            border: 3px solid #fff;
+            clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 900;
+            font-size: 0.75rem;
+            transform: rotate(-10deg);
+            color: #fff;
+        }
+
+        .brand-title {
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 900;
+            font-size: 1.6rem;
+            color: #ffeb3b;
+            letter-spacing: 1px;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .room-badge {
+            background-color: #312170;
+            border: 2px solid #5743a3;
+            padding: 10px 18px;
+            border-radius: 12px;
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: #fff;
+            letter-spacing: 0.5px;
+        }
+
+        .icon-btn {
+            background-color: transparent;
+            border: 2px solid #5743a3;
+            color: #fff;
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .icon-btn:hover {
+            background-color: #4f3b99;
+            border-color: #795dcd;
+        }
+
+        /* Screen Header Area */
+        .page-header {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .round-status {
+            font-size: 0.85rem;
+            font-weight: 800;
+            color: #00f0b5;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .page-title {
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 900;
+            font-size: 2.3rem;
+            color: #ffeb3b;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            line-height: 1.1;
+        }
+
+        .page-subtitle {
+            color: #bfaee3;
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-top: 6px;
+        }
+
+        /* Leaderboard List */
+        .leaderboard-container {
+            max-width: 720px;
+            margin: 0 auto 24px auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .leaderboard-card {
+            background-color: #312170;
+            border: 2px solid #5743a3;
+            border-radius: 14px;
+            padding: 14px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: border-color 0.2s;
+        }
+
+        .leaderboard-card.winner {
+            border-color: #ffeb3b;
+        }
+
+        .player-info {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .rank-badge {
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 900;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .rank-badge.yellow {
+            background-color: #ffeb3b;
+            color: #1c103f;
+        }
+
+        .rank-badge.cyan {
+            background-color: #00f0b5;
+            color: #1c103f;
+        }
+
+        .rank-badge.red {
+            background-color: #e5122b;
+            color: #fff;
+        }
+
+        .player-name {
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 900;
+            font-size: 1.3rem;
+            color: #ffffff;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .score-meta {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .round-points {
+            color: #00f0b5;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .total-points-group {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            min-width: 70px;
+        }
+
+        .total-points-number {
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 900;
+            font-size: 1.6rem;
+            color: #ffeb3b;
+            line-height: 1;
+        }
+
+        .total-points-label {
+            font-size: 0.68rem;
+            font-weight: 800;
+            color: #9a88cd;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            margin-top: 2px;
+        }
+
+        /* Action Buttons Area */
+        .actions-footer {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 14px;
+            margin-top: 28px;
+        }
+
+        .btn-sair {
+            background-color: #312170;
+            border: 2px solid #5743a3;
+            color: #fff;
+            border-radius: 12px;
+            padding: 12px 24px;
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 900;
+            font-size: 1rem;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-transform: uppercase;
+            transition: all 0.2s;
+        }
+
+        .btn-sair:hover {
+            background-color: #4f3b99;
+            border-color: #795dcd;
+        }
+
+        .btn-proxima {
+            background-color: #ffeb3b;
+            color: #1c103f;
+            border: none;
+            border-radius: 12px;
+            padding: 12px 28px;
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 900;
+            font-size: 1.1rem;
+            letter-spacing: 0.8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-transform: uppercase;
+            box-shadow: 0 4px 0 #c2b11e;
+            transition: transform 0.1s, filter 0.2s;
+        }
+
+        .btn-proxima:hover {
+            filter: brightness(1.05);
+        }
+
+        .btn-proxima:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #c2b11e;
+        }
+
+        /* Responsividade */
+        @media (max-width: 600px) {
+            .app-container {
+                padding: 18px;
+            }
+
+            .brand-title {
+                display: none;
+            }
+
+            .score-meta {
+                gap: 12px;
+            }
+
+            .round-points {
+                font-size: 0.8rem;
+            }
+
+            .player-name {
+                font-size: 1.1rem;
+            }
+
+            .total-points-number {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="round-status">INTERVALO - RODADA 2 ENCERRADA</div>
+            <h1 class="page-title">PLACAR GERAL</h1>
+        </div>
+
+        <!-- Leaderboard List -->
+        <div class="leaderboard-container">
+            <!-- 1st Place (Winner highlight) -->
+            <div class="leaderboard-card winner">
+                <div class="player-info">
+                    <div class="rank-badge yellow">
+                        <svg width="22" height="22" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3c0 .6-.4 1-1 1H6c-.6 0-1-.4-1-1v-1h14v1z"/>
+                        </svg>
+                    </div>
+                    <span class="player-name">RAFA</span>
+                </div>
+                <div class="score-meta">
+                    <span class="round-points">+40 nesta rodada</span>
+                    <div class="total-points-group">
+                        <span class="total-points-number">145</span>
+                        <span class="total-points-label">PONTOS</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2nd Place -->
+            <div class="leaderboard-card">
+                <div class="player-info">
+                    <div class="rank-badge cyan">2</div>
+                    <span class="player-name">BIA</span>
+                </div>
+                <div class="score-meta">
+                    <span class="round-points">+0 nesta rodada</span>
+                    <div class="total-points-group">
+                        <span class="total-points-number">120</span>
+                        <span class="total-points-label">PONTOS</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3rd Place -->
+            <div class="leaderboard-card">
+                <div class="player-info">
+                    <div class="rank-badge red">3</div>
+                    <span class="player-name">NANDO</span>
+                </div>
+                <div class="score-meta">
+                    <span class="round-points">+30 nesta rodada</span>
+                    <div class="total-points-group">
+                        <span class="total-points-number">120</span>
+                        <span class="total-points-label">PONTOS</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4th Place -->
+            <div class="leaderboard-card">
+                <div class="player-info">
+                    <div class="rank-badge cyan">4</div>
+                    <span class="player-name">LIA</span>
+                </div>
+                <div class="score-meta">
+                    <span class="round-points">+20 nesta rodada</span>
+                    <div class="total-points-group">
+                        <span class="total-points-number">100</span>
+                        <span class="total-points-label">PONTOS</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Footer -->
+        <div class="actions-footer">
+            <button class="btn-proxima">
+                
+                PRÓXIMA RODADA
+                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.8" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+</body>
+</html>
