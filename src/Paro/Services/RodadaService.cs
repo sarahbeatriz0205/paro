@@ -36,7 +36,7 @@ namespace Paro.Services
 
             for (int i = 0; i < salaBuscada.QuantidadeRodadas; i++)
             {
-                rodada = new Rodada { SalaId = salaId, Tempo = tempo, Letra = SorteiaLetra(), NumeroRodada = i + 1 , Categorias = categorias };
+                rodada = new Rodada { SalaId = salaId, Tempo = tempo, Letra = SorteiaLetra(), NumeroRodada = i + 1 , Categorias = new List<Categoria>(categorias) };
                 rodadas.Add(rodada);
                 salaBuscada.Rodadas.Add(rodada);
             }

@@ -22,8 +22,9 @@ namespace Paro.Services
             return busca;
         }
 
-        public Sala CriarSala(CriarSalaRequest salaRequest)
+        public Sala CriarSala(CriarSalaRequest salaRequest, string usuarioId, string nomeOrganizador)
         {
+
             Sala sala = new Sala
             {
                 QuantidadeRodadas = salaRequest.QuantidadeRodadas,
@@ -33,10 +34,10 @@ namespace Paro.Services
 
             Jogador organizador = new Jogador
             {
-                Nome = salaRequest.NomeOrganizador,
+                Nome = nomeOrganizador,
                 PontuacaoTotal = 0,
-                IdentificaOrganizador = true
-
+                IdentificaOrganizador = true,
+                UsuarioId = usuarioId
             };
 
             var salaDao = _factory.ObterSalaDao();
@@ -113,6 +114,13 @@ namespace Paro.Services
                 salaDao.InserirJogadorNaSala(jogadorCriado, salaBuscada);
             }
             return jogadorCriado;
+        }
+
+        public Sala ObterSalaPorCodigo(int codigo)
+        {
+            var salaDao = _factory.ObterSalaDao();
+            Sala salaBuscada = salaDao.BuscarSalaPorCodigo(codigo);
+            return salaBuscada;
         }
     }
 }

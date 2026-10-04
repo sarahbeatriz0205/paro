@@ -33,8 +33,8 @@ namespace Auth.Service
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken(
-                issuer: _config["JwtSettings:Secret"],
-                audience: _config["JwtSettings:Secret"],
+                issuer: _config["JwtSettings:Issuer"],
+                audience: _config["JwtSettings:Audience"],
                 claims: claims,
                 expires: DateTime.Now.AddMinutes(_accessTokenExpiryMinutes),
                 signingCredentials: creds

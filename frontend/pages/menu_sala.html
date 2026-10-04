@@ -378,55 +378,23 @@
                     <span class="players-title">JOGADORES</span>
                 </div>
                 <div class="players-grid">
-                    <!-- Player 1 (Host) -->
-                    <div class="player-item">
-                        <div class="player-left">
-                            <div class="avatar-circle cyan">B</div>
-                            <span class="player-name">Bia</span>
-                        </div>
-                        <div class="crown-icon" title="Anfitrião">
-                            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3c0 .6-.4 1-1 1H6c-.6 0-1-.4-1-1v-1h14v1z"/>
-                            </svg>
-                        </div>
-                    </div>
-
-                    <!-- Player 2 -->
-                    <div class="player-item">
-                        <div class="player-left">
-                            <div class="avatar-circle yellow">R</div>
-                            <span class="player-name">Rafa</span>
-                        </div>
-                    </div>
-
-                    <!-- Player 3 -->
-                    <div class="player-item">
-                        <div class="player-left">
-                            <div class="avatar-circle red">N</div>
-                            <span class="player-name">Nando</span>
-                        </div>
-                    </div>
-
-                    <!-- Player 4 -->
-                    <div class="player-item">
-                        <div class="player-left">
-                            <div class="avatar-circle cyan">L</div>
-                            <span class="player-name">Lia</span>
-                        </div>
-                    </div>
+                    
                 </div>
             </div>
 
             <!-- Right: Room Code & Action Card -->
-            <div class="room-controls-card">
-                <span class="code-label">CÓDIGO DA SALA</span>
-                <div class="room-code">PARO-24</div>
+<div class="room-controls-card">
+    <span class="code-label">CÓDIGO DA SALA</span>
+    <div class="room-code" id="codigoSala"></div>
 
-                <p class="share-hint">Compartilhe o código com seus amigos.</p>
+    <p class="share-hint">Compartilhe o código com seus amigos.</p>
 
-                            </div>
+    <button class="btn-start" id="btnIniciar" style="display:none;">
+        INICIAR RODADA
+    </button>
+</div>              </div>
         </div>
     </div>
-
+<script src="../scripts/menu_sala.js"></script>
 </body>
 </html>

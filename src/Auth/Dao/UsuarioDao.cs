@@ -15,7 +15,7 @@ namespace Auth.Dao
 
         public Usuario? BuscaUsuario(string nome, string senha) 
         {
-            var usuario = _contexto.Usuario.SingleOrDefault(u => u.Nome == nome && u.Senha == senha);
+            var usuario = _contexto.Usuario.FirstOrDefault(u => u.Nome == nome && u.Senha == senha);
             return usuario;
         }
 

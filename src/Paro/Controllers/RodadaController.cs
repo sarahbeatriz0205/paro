@@ -1,12 +1,14 @@
 using Microsoft.AspNetCore.Mvc;
 using Paro.Models;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 using Paro.Requests.RodadaRequests;
 using Paro.Services;
 
 namespace Paro.Controllers
 {
     [ApiController]
-    [Route("api/rodada/[controller]")]
+    [Route("api/rodada")]
     public class RodadaController : ControllerBase
     {
         private readonly RodadaService _rodadaService;
@@ -25,7 +27,8 @@ namespace Paro.Controllers
             return Ok(rodada);
         }
 
-        [HttpPost("{salaId}", Name = "CriaRodada")]
+        [Authorize]
+        [HttpPost("{salaId}", Name = "criar-rodada")]
         public IActionResult Create([FromRoute] int salaId, [FromBody] CriarRodadaRequest request)
         {
             var criaRodada = _rodadaService.RodadasPreConfiguradas(salaId, request.Tempo);

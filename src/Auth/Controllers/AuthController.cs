@@ -1,6 +1,8 @@
 using Auth.Requests.AutenticacaoRequests;
 using Microsoft.AspNetCore.Mvc;
 using Auth.Service;
+using Auth.Hateoas;
+
 namespace Auth.Controllers
 {
     [ApiController]
@@ -25,8 +27,9 @@ namespace Auth.Controllers
                 return Unauthorized("Credenciais inválidas");
 
             var token = _tokenService.GeraToken(usuario);
+            var links = new AuthHateoas().Links();
 
-            return Ok(new { token });
+            return StatusCode(200, new { token, links});
         }
 
 
@@ -38,7 +41,9 @@ namespace Auth.Controllers
             if (usuario == null)
                 return BadRequest("Erro ao criar usuário");
 
-            return StatusCode(201, "Usuário criado com sucesso!");
+            var links = new AuthHateoas().Links();
+
+            return StatusCode(201, new { links });
         }
     }
 }

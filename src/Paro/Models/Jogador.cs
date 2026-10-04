@@ -9,6 +9,8 @@ namespace Paro.Models
         public int Id { get; set; }
         public string? Nome { get; set; }
         public int PontuacaoTotal { get; set; }
-        public bool IdentificaOrganizador { get; set; } // um jogador também pode ser organizador
+        public bool IdentificaOrganizador { get; set; }
+        public int SalaId { get; set; }
+        public string? UsuarioId { get; set; }
     }
 }
