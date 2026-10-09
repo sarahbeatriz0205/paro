@@ -1,5 +1,5 @@
 async function criarConta() {
-    const url = 'http://192.168.1.79:5288/auth/criar';
+    const url = 'http://localhost:5288/auth/criar';
 
     var nome = document.getElementById('nickname').value;
     var senha = document.getElementById('password').value;

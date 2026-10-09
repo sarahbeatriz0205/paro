@@ -5,7 +5,7 @@ const cores = ['cyan', 'yellow', 'red'];
 
 async function atualizarSala() {
     try {
-        const response = await fetch(`http://192.168.1.79:5288/sala/${salaId}`);
+        const response = await fetch(`http://localhost:5288/sala/${salaId}`);
         const textoCru = await response.text(); // pega o texto bruto primeiro
 
         console.log('STATUS:', response.status);

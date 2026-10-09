@@ -18,7 +18,11 @@ namespace Paro.Repositories
         }
         public Sala ObterPorId(int id)
         {
-            return _contexto.Set<Sala>().Include(s => s.Jogadores).Include(s => s.Rodadas).ThenInclude(r => r.Categorias).FirstOrDefault(s => s.Id == id);
+            return _contexto.Set<Sala>()
+            .Include(s => s.Jogadores)
+            .Include(s => s.Rodadas)
+                .ThenInclude(r => r.Categorias)
+            .FirstOrDefault(s => s.Id == id);
         }
 
         public void CriarSala(Sala sala)

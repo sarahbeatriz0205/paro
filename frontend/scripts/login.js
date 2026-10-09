@@ -1,5 +1,10 @@
+document.querySelector('.back-btn').addEventListener('click', () => {
+    window.history.back();
+});
+
+
 async function fazerLogin() {
-    const url = 'http://192.168.1.79:5288/auth/login';
+    const url = 'http://localhost:5288/auth/login';
 
     var nome = document.getElementById('nickname').value;
     var senha = document.getElementById('password').value;

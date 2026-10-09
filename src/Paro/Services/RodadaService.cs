@@ -19,33 +19,24 @@ namespace Paro.Services
         // cronômetro vai ter que ser em javascript direto no front
         // back vai retornar o tempo que o usuário setou pra a rodada
 
-        public List<Rodada> RodadasPreConfiguradas(int salaId, int tempo)
+        public List<Rodada> RodadasPreConfiguradas(int quantidadeRodadas, int tempo)
         {
-            var salaDao = _factory.ObterSalaDao();
-            var categoriaService = _factory.ObterCategoriaService();
-            var salaBuscada = salaDao.ObterPorId(salaId);
-            List<Categoria> categorias = categoriaService.ListaDeCategorias();
-
-            if (salaBuscada is null)
-            {
-                return null;
-            }
-
             List<Rodada> rodadas = new List<Rodada>();
             Rodada rodada;
 
-            for (int i = 0; i < salaBuscada.QuantidadeRodadas; i++)
+            for (int i = 0; i < quantidadeRodadas; i++)
             {
-                rodada = new Rodada { SalaId = salaId, Tempo = tempo, Letra = SorteiaLetra(), NumeroRodada = i + 1 , Categorias = new List<Categoria>(categorias) };
+                rodada = new Rodada { Tempo = tempo, 
+                                      Letra = SorteiaLetra(), 
+                                      NumeroRodada = i + 1 , 
+                                      Categorias = _factory.ObterCategoriaService().ListaDeCategorias() };
                 rodadas.Add(rodada);
-                salaBuscada.Rodadas.Add(rodada);
             }
  
-            salaDao.AlterarSala(salaBuscada);
             return rodadas;
         }
 
-        public char SorteiaLetra()
+        private char SorteiaLetra()
         {
             List<char> alfabeto = new List<char> {
                 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'l', 'm',

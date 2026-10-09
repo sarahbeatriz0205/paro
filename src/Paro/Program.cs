@@ -9,8 +9,6 @@ using Paro.Utils;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -25,7 +23,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             IssuerSigningKey = new SymmetricSecurityKey(
                 Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:Secret"]!))
         };
-    }); 
+    });
 
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
@@ -56,12 +54,8 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Swagger
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 
@@ -71,4 +65,4 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.Run();
+app.Run();   

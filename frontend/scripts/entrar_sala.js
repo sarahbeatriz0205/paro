@@ -1,5 +1,10 @@
+document.querySelector('.back-btn').addEventListener('click', () => {
+    window.history.back();
+});
+
+
 async function entrarNaSala() {
-    const url = 'http://192.168.1.79:5288/sala/entrar';
+    const url = 'http://localhost:5288/sala/entrar';
 
     var codigo = document.getElementById('codigoSala').value;
     var nomeJogador = localStorage.getItem('nickname');

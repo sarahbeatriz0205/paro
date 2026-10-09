@@ -66,7 +66,7 @@ namespace Paro.Controllers
             return Ok(salaAlt);
         }
 
-        [HttpPost("{codigo}", Name ="entrar")]
+        [HttpPost("entrar", Name ="entrar")]
         public IActionResult Entrar(EntrarRequest request)
         {
             SalaService salaService = _factory.ObterSalaService();
@@ -81,7 +81,7 @@ namespace Paro.Controllers
             }
             linkEspecifico = links[0];
 
-            return StatusCode(201, new { jogadorEntrou, links = linkEspecifico });
+            return StatusCode(201, new { salaId = sala.Id, jogadorEntrou, links = linkEspecifico });
         }
     }
 }

@@ -9,16 +9,10 @@ namespace Paro.Services
         {
             _factory = factory;
         }
-        public List<Categoria> ListaDeCategorias()
-        {
-            var categoriaDao = _factory.ObterCategoriaDao();
-            return categoriaDao.Listar();
-        }
+        private static readonly string[] NomesPadrao =
+        { "Nome", "Fruta", "Animal", "Objeto", "Cor", "Comida" }; 
 
-        public int ContagemCategorias()
-        {
-            var categoriaDao = _factory.ObterCategoriaDao();
-            return categoriaDao.ContagemCategorias();
-        }
+        public List<Categoria> ListaDeCategorias() =>
+        NomesPadrao.Select(n => new Categoria { Nome = n }).ToList();
     }
 }

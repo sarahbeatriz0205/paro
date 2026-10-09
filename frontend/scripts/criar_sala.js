@@ -3,7 +3,7 @@ document.querySelector('.back-btn').addEventListener('click', () => {
 });
 
 async function criarSala() {
-    const url = 'http://192.168.1.79:5288/sala/criar-sala';
+    const url = 'http://localhost:5288/sala/criar-sala';
 
     const token = localStorage.getItem('token'); 
 

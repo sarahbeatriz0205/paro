@@ -24,12 +24,14 @@ namespace Paro.Services
 
         public Sala CriarSala(CriarSalaRequest salaRequest, string usuarioId, string nomeOrganizador)
         {
+            var rodadaService = _factory.ObterRodadaService();
 
             Sala sala = new Sala
             {
                 QuantidadeRodadas = salaRequest.QuantidadeRodadas,
                 Status = Sala.StatusEnum.NaoIniciada,
                 Codigo = GerarCodigoSala(),
+                Rodadas = rodadaService.RodadasPreConfiguradas(salaRequest.QuantidadeRodadas, salaRequest.Tempo)
             };
 
             Jogador organizador = new Jogador

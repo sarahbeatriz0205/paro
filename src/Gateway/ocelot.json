@@ -3,70 +3,67 @@
     {
       "DownstreamPathTemplate": "/api/sala/{everything}",
       "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 5204
-        }
-      ],
+      "DownstreamHostAndPorts": [{ "Host": "localhost", "Port": 5204 }],
       "UpstreamPathTemplate": "/sala/{everything}",
-      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ]
+      "UpstreamHttpMethod": ["Get", "Post", "Put", "Delete"],
+      "SwaggerKey": "paro"
     },
-    
     {
       "DownstreamPathTemplate": "/api/rodada/{everything}",
       "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 5204
-        }
-      ],
+      "DownstreamHostAndPorts": [{ "Host": "localhost", "Port": 5204 }],
       "UpstreamPathTemplate": "/rodada/{everything}",
-      "UpstreamHttpMethod": [ "Get", "Post" ]
+      "UpstreamHttpMethod": ["Get", "Post"],
+      "SwaggerKey": "paro"
     },
-
     {
       "DownstreamPathTemplate": "/api/jogador/{everything}",
       "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 5204
-        }
-      ],
+      "DownstreamHostAndPorts": [{ "Host": "localhost", "Port": 5204 }],
       "UpstreamPathTemplate": "/jogador/{everything}",
-      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ]
+      "UpstreamHttpMethod": ["Get", "Post", "Put", "Delete"],
+      "SwaggerKey": "paro"
     },
-
     {
       "DownstreamPathTemplate": "/api/resposta/{everything}",
       "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 5204
-        }
-      ],
+      "DownstreamHostAndPorts": [{ "Host": "localhost", "Port": 5204 }],
       "UpstreamPathTemplate": "/resposta/{everything}",
-      "UpstreamHttpMethod": [ "Post" ]
+      "UpstreamHttpMethod": ["Post"],
+      "SwaggerKey": "paro"
     },
-
-
     {
       "DownstreamPathTemplate": "/api/auth/{everything}",
       "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 5253
-        }
-      ],
+      "DownstreamHostAndPorts": [{ "Host": "localhost", "Port": 5253 }],
       "UpstreamPathTemplate": "/auth/{everything}",
-      "UpstreamHttpMethod": [ "Post" ]
+      "UpstreamHttpMethod": ["Post"],
+      "SwaggerKey": "auth"
+    }
+  ],
+  "SwaggerEndPoints": [
+    {
+      "Key": "paro",
+      "Config": [
+        {
+          "Name": "Paro API",
+          "Version": "v1",
+          "Url": "http://localhost:5204/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    {
+      "Key": "auth",
+      "Config": [
+        {
+          "Name": "Auth API",
+          "Version": "v1",
+          "Url": "http://localhost:5253/swagger/v1/swagger.json"
+        }
+      ]
     }
   ],
   "GlobalConfiguration": {
     "BaseUrl": "https://0.0.0.0:5288"
   }
-}
+}   

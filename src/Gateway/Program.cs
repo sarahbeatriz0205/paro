@@ -18,7 +18,16 @@ builder.Services.AddCors(options =>
 });
 
 builder.Services.AddOcelot(builder.Configuration);
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();     
+builder.Services.AddSwaggerForOcelot(builder.Configuration); 
 var app = builder.Build();
+
+app.UseSwaggerForOcelotUI(options =>                          
+{
+    options.PathToSwaggerGenerator = "/swagger/docs";
+});
+
 app.UseCors("PermitirFront"); 
 
 // Use Ocelot middleware
